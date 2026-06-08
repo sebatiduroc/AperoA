@@ -98,6 +98,7 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
 .indice{background:#fff;border-radius:var(--rs);padding:14px;margin-top:8px;font-size:1rem;line-height:1.6;color:var(--texte);border:1px solid #C8E6C9;}
 .indice-l{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--vert);margin-bottom:7px;}
 .coords{background:var(--gris-cl);border-radius:var(--rs);padding:11px 15px;margin-top:9px;font-family:monospace;font-size:1rem;color:var(--gris-f);text-align:center;letter-spacing:1px;}
+.coords-note{text-align:center;font-size:0.75rem;color:var(--gris-m);margin-top:5px;}.coords-note em{font-style:italic;}
 .btn-nav{width:100%;background:linear-gradient(135deg,#155724,var(--vert));color:#fff;border:none;border-radius:var(--rs);padding:15px;font-family:'Lato',sans-serif;font-size:1.08rem;font-weight:700;cursor:pointer;margin-top:12px;letter-spacing:1px;box-shadow:0 4px 12px rgba(30,132,73,0.4);display:flex;align-items:center;justify-content:center;gap:10px;}
 .btn-nav:active{transform:scale(0.98);}
 .btn-nav svg{width:22px;height:22px;fill:currentColor;flex-shrink:0;}
@@ -134,7 +135,7 @@ const AFF    = {A:"P", B:"N", C:"E", D:"F", E:"A", F:"G", G:"R"};
 // DONNÉES
 // ================================================================
 const PTS = {
-  A:{sport:"La Pétanque",emoji:"🎯",lat:44.70957051309207,lng:2.6406913706052646,
+  A:{sport:"La Pétanque",emoji:"🎯",lat:44.70911550894786,lng:2.6406847508930964,
     indice:"Dans la niche, récupérer UNIQUEMENT la fiche de votre couleur.",
     q:[
       {t:"Combien de boules chaque joueur tient-il en main lors d'un tête-à-tête ?",o:["2 boules","3 boules","4 boules","6 boules"],r:1},
@@ -193,8 +194,8 @@ const PTS = {
     q:[
       {t:"En France, quel organisme est chargé du balisage des sentiers de Grande Randonnée (GR) ?",o:["Le Club Alpin Français","La Fédération Française de la Randonnée Pédestre","Le Ministère de l'Environnement","Les Parcs Naturels Régionaux"],r:1},
       {t:"Quelle couleur de balisage est réservée aux sentiers de Grande Randonnée (GR) ?",o:["Jaune","Bleu et blanc","Rouge et blanc","Orange"],r:2},
-      {t:"Quel est le sentier de randonnée pédestre le plus long des États-Unis ?",o:["Continental Divide Trail","John Muir Trail","Pacific Crest Trail","Appalachian Trail"],r:3},
-      {t:"Selon la règle de Naismith, combien de temps faut-il ajouter par 300 mètres de dénivelé positif en randonnée ?",o:["1 heure","15 minutes","30 minutes","2 heures"],r:0},
+      {t:"Quel GR traverse les Pyrénées d'Hendaye à Banyuls-sur-Mer sur environ 900 km ?",o:["GR10","GR20","GR65","GR66"],r:0},
+      {t:"Selon la règle de Naismith, combien de temps faut-il ajouter par 600 mètres de dénivelé positif en randonnée ?",o:["1 heure","15 minutes","30 minutes","2 heures"],r:0},
       {t:"Le « GR 65 » correspond à quel célèbre itinéraire de pèlerinage ?",o:["Chemin de Rocamadour","Compostelle via Turonensis","Compostelle via Tolosana","Chemin du Puy-en-Velay (via Podiensis)"],r:3}
     ]}
 };
@@ -280,8 +281,9 @@ function render(){
   if([...ORDRE,...LIBRES].every(p=>ST.valides.includes(p))){
     html += '<div class="felicitations"><span class="confetti">🎉</span>'
       +'<h2>Félicitations !</h2>'
-      +'<p>L\'équipe <strong>ROUGE</strong> a bouclé toutes les étapes !<br><br>'
-      +'Rendez-vous au point de rassemblement pour trinquer ! 🥂</p></div>';
+      +'<p>🗂️ Avez-vous pensé à récupérer les fiches de votre couleur à chacun des points ?<br><br>'
+      +'Si c\'est bon, rendez-vous au lieu de rassemblement pour une mise en commun, et surtout...<br><br>'
+      +'🥂 pour partager l\'apéritif !!!</p></div>';
     app.innerHTML = html;
     return;
   }
@@ -307,6 +309,7 @@ function render(){
       +'<div class="succes-t">📍 Indice pour trouver votre fiche</div>'
       +'<div class="indice">'+pt.indice+'</div>'
       +'<div class="coords">📌 '+pt.lat.toFixed(6)+', '+pt.lng.toFixed(6)+'</div>'
+      +'<div class="coords-note"><em>Coordonnées fiables à quelques mètres près</em> 😉</div>'
       +'<button class="btn-nav" onclick="allerA('+pt.lat+','+pt.lng+')">'
       +'<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'
       +'Y aller !</button>'
@@ -343,6 +346,7 @@ function render(){
       +'<div class="succes-t">🎉 Bravo, toutes les réponses sont correctes !</div>'
       +'<div class="indice"><div class="indice-l">📍 Indice pour trouver votre fiche</div>'+pt.indice+'</div>'
       +'<div class="coords">📌 '+pt.lat.toFixed(6)+', '+pt.lng.toFixed(6)+'</div>'
+      +'<div class="coords-note"><em>Coordonnées fiables à quelques mètres près</em> 😉</div>'
       +'<button class="btn-nav" onclick="allerA('+pt.lat+','+pt.lng+')">'
       +'<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'
       +'Y aller !</button></div>'
