@@ -131,7 +131,7 @@ const AFF    = {A:"P", B:"N", C:"E", D:"F", E:"A", F:"G", G:"R"};
 // DONNÉES
 // ================================================================
 const PTS = {
-  A:{sport:"La Pétanque",emoji:"🎯",lat:44.708216,lng:2.64065,
+  A:{sport:"La Pétanque",emoji:"🎯",lat:44.70957051309207,lng:2.6406913706052646,
     indice:"Dans la niche, récupérer UNIQUEMENT la fiche de votre couleur.",
     q:[
       {t:"Combien de boules chaque joueur tient-il en main lors d'un tête-à-tête ?",o:["2 boules","3 boules","4 boules","6 boules"],r:1},
@@ -155,7 +155,7 @@ const PTS = {
       {t:"À quels JO l'escalade a-t-elle fait son apparition en compétition officielle ?",o:["Rio 2016","Tokyo 2020","Paris 2024","Londres 2012"],r:1},
       {t:"Comment appelle-t-on la poudre blanche pour améliorer l'adhérence des mains ?",o:["Résine","Magnésie","Talc","Craie grasse"],r:1},
       {t:"Qu'est-ce que le « bloc » en escalade ?",o:["Une voie sur grande paroi avec corde","L'escalade de courtes voies sans corde ni harnais","Un nœud de sécurité","Un type de prise en dévers"],r:1},
-      {t:"Quelle grimpeuse française a remporté une médaille aux JO de Tokyo 2020 ?",o:["Fanny Gibert","Julia Chanourdie","Anouck Jaubert","Janja Garnbret"],r:0},
+      {t:"Quelle grimpeuse française a atteint la finale du combiné d'escalade aux JO de Tokyo 2020 ?",o:["Fanny Gibert","Julia Chanourdie","Anouck Jaubert","Janja Garnbret"],r:2},
       {t:"Comment s'appelle la technique consistant à grimper uniquement avec les bras ?",o:["Le dülfer","Le campusing","Le statique","Le dyno"],r:1}
     ]},
   D:{sport:"Le Football",emoji:"⚽",lat:44.712102,lng:2.642513,
@@ -399,7 +399,8 @@ function valider(lettre){
   if(!ST.valides.includes(lettre)){
     ST.valides.push(lettre);
     sauver(ST);
-    // PAS de changement automatique : le joueur choisit quand passer au suivant
+    // Mettre à jour les pastilles immédiatement (vert sur validé, rouge sur suivant)
+    render();
   }
 }
 
