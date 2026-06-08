@@ -7,7 +7,7 @@
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>L'Apéro – Équipe ROUGE [build-20]</title>
+<title>L'Apéro – Équipe ROUGE [build-30]</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -26,39 +26,50 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
 
 .container{max-width:480px;margin:0 auto;padding:16px 14px 50px;}
 
-/* PROGRESSION */
-.card-prog{background:var(--blanc);border-radius:var(--r);padding:18px 20px;margin-bottom:16px;box-shadow:0 4px 20px var(--ombre);}
-.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+/* ── PROGRESSION ── */
+.card-prog{background:var(--blanc);border-radius:var(--r);padding:16px 18px 14px;margin-bottom:16px;box-shadow:0 4px 20px var(--ombre);}
+.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .prog-titre{font-weight:700;font-size:0.9rem;color:var(--gris-m);text-transform:uppercase;letter-spacing:1px;}
 .prog-score{font-weight:700;font-size:1rem;color:var(--rouge);}
-.pastilles{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
 
-/* PASTILLES */
-.past{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;
+/* ── PASTILLES : grille fixe 1 rangée, taille auto ── */
+.pastilles{
+  display:grid;
+  /* 6 obligatoires + séparateur + 1 libre = 8 colonnes */
+  grid-template-columns: repeat(6,1fr) 4px 1fr;
+  gap:5px;
+  align-items:center;
+}
+.past{
+  /* s'adapte à la colonne, carré via aspect-ratio */
+  width:100%;aspect-ratio:1;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;
   border:2px solid #ddd;background:var(--gris-cl);color:#bbb;
-  transition:all 0.3s;cursor:default;user-select:none;}
-.past.verr{background:var(--gris-cl);border-color:#ddd;color:#bbb;cursor:default;}
+  transition:box-shadow 0.2s;cursor:default;user-select:none;
+}
 .past.actif{background:var(--rouge);border-color:var(--rouge-f);color:#fff;cursor:pointer;animation:pulseR 1.8s infinite;}
-.past.fait{background:var(--vert);border-color:var(--vert);color:#fff;cursor:pointer;}
+.past.fait {background:var(--vert); border-color:var(--vert); color:#fff;cursor:pointer;}
 .past.libre{background:var(--rouge);border-color:var(--rouge-f);color:#fff;cursor:pointer;animation:pulseR 1.8s infinite;}
 .past.libre-fait{background:var(--vert);border-color:var(--vert);color:#fff;cursor:pointer;}
-/* HALO = carte actuellement affichée */
-.past.halo{box-shadow:0 0 0 3px #fff,0 0 0 7px rgba(255,255,255,0.5)!important;}
-@keyframes pulseR{0%,100%{box-shadow:0 0 0 4px rgba(192,57,43,0.2);}50%{box-shadow:0 0 0 9px rgba(192,57,43,0.05);}}
 
-.sep{width:1px;height:30px;background:rgba(0,0,0,0.12);margin:0 2px;}
+/* HALO uniquement sur la pastille dont la carte est affichée */
+.past.halo{box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(255,255,255,0.6)!important;}
+/* Les pastilles non-halo n'ont AUCUN box-shadow résiduel */
+.past:not(.halo){box-shadow:none!important;}
 
-/* CARTE */
+@keyframes pulseR{0%,100%{opacity:1;}50%{opacity:0.8;}}
+
+.sep{background:rgba(0,0,0,0.12);height:100%;width:100%;border-radius:2px;}
+
+/* ── CARTE ── */
 .carte{background:var(--blanc);border-radius:var(--r);overflow:hidden;box-shadow:0 6px 28px var(--ombre);margin-bottom:14px;}
 .hd-r{background:linear-gradient(135deg,var(--rouge-f),var(--rouge));padding:16px 20px;color:#fff;position:relative;}
-.hd-v{background:linear-gradient(135deg,#155724,var(--vert));padding:16px 20px;color:#fff;position:relative;cursor:pointer;}
-.hd-v:active{opacity:0.9;}
+.hd-v{background:linear-gradient(135deg,#155724,var(--vert));padding:16px 20px;color:#fff;position:relative;}
 .hd-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:2px;padding:3px 11px;margin-bottom:7px;text-transform:uppercase;}
 .hd-nom{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;line-height:1.2;}
 .hd-sub{font-size:0.88rem;opacity:0.88;margin-top:3px;font-style:italic;}
 .hd-ico{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:2.8rem;opacity:0.22;}
-.hd-tog{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.4rem;opacity:0.7;}
 .badge-libre{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);border-radius:20px;color:#fff;font-size:0.72rem;font-weight:700;padding:2px 10px;margin-left:6px;letter-spacing:1px;vertical-align:middle;}
 
 .corps{padding:18px 20px;}
@@ -76,10 +87,6 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
 .radio{width:22px;height:22px;border-radius:50%;border:2px solid #ccc;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;}
 .opt.sel .radio{background:var(--rouge);border-color:var(--rouge);}
 .opt.sel .radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;}
-.opt.lect{cursor:default;pointer-events:none;}
-.opt.ok{border-color:var(--vert);background:var(--vert-p);}
-.opt.ok .radio{background:var(--vert);border-color:var(--vert);}
-.opt.ok .radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;}
 
 .btn-val{width:100%;background:linear-gradient(135deg,var(--rouge-f),var(--rouge));color:#fff;border:none;border-radius:var(--rs);padding:15px;font-family:'Lato',sans-serif;font-size:1.08rem;font-weight:700;cursor:pointer;margin-top:8px;letter-spacing:1px;box-shadow:0 4px 12px rgba(192,57,43,0.4);}
 .btn-val:active{transform:scale(0.98);}
@@ -95,21 +102,14 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
 .btn-nav:active{transform:scale(0.98);}
 .btn-nav svg{width:22px;height:22px;fill:currentColor;flex-shrink:0;}
 
+/* Carte validée : juste l'indice, pas de toggle */
+.valide-corps{padding:16px 20px;}
+
 .felicitations{text-align:center;background:var(--blanc);border-radius:var(--r);padding:36px 24px;box-shadow:0 6px 28px var(--ombre);}
 .felicitations h2{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--or);margin-bottom:10px;}
 .felicitations p{font-size:1.05rem;color:var(--gris-m);line-height:1.65;}
 .confetti{font-size:2.5rem;display:block;margin-bottom:14px;animation:bounce 1s infinite;}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:999;padding:20px;}
-.modal-ov.on{display:flex;}
-.modal{background:var(--blanc);border-radius:var(--r);padding:26px 22px;max-width:340px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;}
-.modal h3{font-family:'Playfair Display',serif;font-size:1.35rem;margin-bottom:9px;}
-.modal p{font-size:0.97rem;color:var(--gris-m);margin-bottom:20px;line-height:1.5;white-space:pre-line;}
-.mbtns{display:flex;gap:10px;}
-.mbtns button{flex:1;padding:13px;border:none;border-radius:var(--rs);font-family:'Lato',sans-serif;font-weight:700;font-size:0.98rem;cursor:pointer;}
-.m-ok{background:var(--vert);color:#fff;}
-.m-ann{background:var(--gris-cl);color:var(--texte);}
 </style>
 </head>
 <body>
@@ -118,25 +118,14 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
   <div class="badge-equipe">⬤ ÉQUIPE ROUGE</div>
 </header>
 <div class="container" id="app"></div>
-<div class="modal-ov" id="modal">
-  <div class="modal">
-    <h3>🗺️ Navigation</h3>
-    <p id="mtxt"></p>
-    <div class="mbtns">
-      <button class="m-ann" onclick="closeModal()">Annuler</button>
-      <button class="m-ok" id="mok">Y aller !</button>
-    </div>
-  </div>
-</div>
 <script>
 // ================================================================
-// CONFIG — à modifier pour chaque équipe
+// CONFIG
 // ================================================================
-const EQUIPE   = "ROUGE";
-const ORDRE    = ["A","B","C","D","E","F"];   // ordre obligatoire
-const LIBRES   = ["G"];                        // points libres
-// Lettres affichées (mnémotechniques, pas d'ordre apparent)
-const AFF = {A:"P", B:"N", C:"E", D:"F", E:"A", F:"G", G:"R"};
+const EQUIPE = "ROUGE";
+const ORDRE  = ["A","B","C","D","E","F"];
+const LIBRES = ["G"];
+const AFF    = {A:"P", B:"N", C:"E", D:"F", E:"A", F:"G", G:"R"};
 
 // ================================================================
 // DONNÉES
@@ -208,90 +197,72 @@ const PTS = {
 };
 
 // ================================================================
-// ÉTAT — clé unique, nettoyage des anciennes versions
+// ÉTAT
 // ================================================================
-const CLE = "apero_ROUGE_v4";
-["apero_ROUGE_v1","apero_ROUGE_v2","apero_ROUGE_v3"].forEach(k=>{
-  try{ localStorage.removeItem(k); }catch(e){}
+const CLE = "apero_ROUGE_v5";
+// Purge des anciennes clés
+["v1","v2","v3","v4"].forEach(v=>{
+  try{ localStorage.removeItem("apero_ROUGE_"+v); }catch(e){}
 });
 
 function etatVide(){ return {valides:[]}; }
-
 function charger(){
-  try{
-    const s = localStorage.getItem(CLE);
-    if(s) return JSON.parse(s);
-  }catch(e){}
+  try{ const s=localStorage.getItem(CLE); if(s) return JSON.parse(s); }catch(e){}
   return etatVide();
 }
-function sauver(st){ try{ localStorage.setItem(CLE, JSON.stringify(st)); }catch(e){} }
+function sauver(st){ try{ localStorage.setItem(CLE,JSON.stringify(st)); }catch(e){} }
 
-// Index courant dans ORDRE (premier non validé)
-function indexCourant(st){
-  for(let i=0;i<ORDRE.length;i++){
-    if(!st.valides.includes(ORDRE[i])) return i;
-  }
-  return ORDRE.length; // tous validés
+function premierNonValide(st){
+  const p = ORDRE.find(l=>!st.valides.includes(l));
+  return p !== undefined ? p : LIBRES[0];
 }
 
-let ST = charger();   // état persistant : { valides:[] }
-let repCours = {};    // réponses QCM en cours
+let ST = charger();
+let repCours = {};
 
-// pointAffiche : lettre INTERNE de la carte visible
-// = premier obligatoire non validé (ou G si tous validés)
-// Écrit UNIQUEMENT par : init, afficherPoint(), apresValidation()
-let pointAffiche = (()=>{
-  const p = ORDRE.find(l => !ST.valides.includes(l));
-  return p !== undefined ? p : LIBRES[0];
-})();
+// pointAffiche : lettre interne. Écrit uniquement par afficherPoint() et apresValidation().
+// JAMAIS modifié dans render().
+let pointAffiche = premierNonValide(ST);
 
 // ================================================================
-// NAVIGATION
+// NAVIGATION — directe, sans modal
 // ================================================================
-let urlNav = "";
-function openModal(lat, lng, sport){
+function allerA(lat, lng){
   const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  urlNav = ios
+  const url = ios
     ? "maps://maps.apple.com/?daddr="+lat+","+lng+"&dirflg=w"
     : "https://www.google.com/maps/dir/?api=1&destination="+lat+","+lng+"&travelmode=walking";
-  document.getElementById("mtxt").textContent =
-    "Destination : "+sport+"\nCoordonnées : "+lat.toFixed(6)+", "+lng.toFixed(6)+"\n\nOuvre l'application de navigation.";
-  document.getElementById("mok").onclick = ()=>{ closeModal(); window.open(urlNav,"_blank"); };
-  document.getElementById("modal").classList.add("on");
+  window.open(url, "_blank");
 }
-function closeModal(){ document.getElementById("modal").classList.remove("on"); }
 
 // ================================================================
 // RENDU
 // ================================================================
 function render(){
-  const app = document.getElementById("app");
-  const idx  = indexCourant(ST);
+  const app   = document.getElementById("app");
   const total = ORDRE.length + LIBRES.length;
   const fait  = ST.valides.length;
 
-  // ── Pastilles ───────────────────────────────────────────────
+  // ── Pastilles (grille fixe, pas de flex-wrap) ────────────────
   let ph = "";
   ORDRE.forEach((p,i)=>{
-    const aff    = AFF[p];
-    const valide = ST.valides.includes(p);
-    const estProchain = (i === idx);
+    const valide     = ST.valides.includes(p);
+    const estProchain = (i === ORDRE.findIndex(l=>!ST.valides.includes(l)));
     let cls = "past";
     if(valide)          cls += " fait";
     else if(estProchain) cls += " actif";
-    else                 cls += " verr";
+    // halo UNIQUEMENT sur pointAffiche
     if(p === pointAffiche) cls += " halo";
     const cliq = valide || estProchain;
-    const ev   = cliq ? ' onclick="afficherPoint(\''+p+'\')"' : "";
-    ph += '<div class="'+cls+'"'+ev+' title="'+PTS[p].sport+'">'+aff+'</div>';
+    const ev   = cliq ? ' onclick="afficherPoint(\''+p+'\')"' : '';
+    ph += '<div class="'+cls+'"'+ev+'>'+AFF[p]+'</div>';
   });
   ph += '<div class="sep"></div>';
   LIBRES.forEach(p=>{
-    const aff    = AFF[p];
     const valide = ST.valides.includes(p);
-    let cls = "past " + (valide ? "libre-fait" : "libre");
+    let cls = "past "+(valide?"libre-fait":"libre");
     if(p === pointAffiche) cls += " halo";
-    ph += '<div class="'+cls+'" onclick="afficherPoint(\''+p+'\')" title="'+PTS[p].sport+' (libre)">'+aff+'</div>';
+    ph += '<div class="'+cls+'" onclick="afficherPoint(\''+p+'\')">'+AFF[p]+'</div>';
   });
 
   let html = '<div class="card-prog">'
@@ -302,84 +273,74 @@ function render(){
     +'<div class="pastilles">'+ph+'</div>'
     +'</div>';
 
-  // ── Fin du jeu ──────────────────────────────────────────────
-  const fini = [...ORDRE,...LIBRES].every(p=>ST.valides.includes(p));
-  if(fini){
+  // ── Fin du jeu ───────────────────────────────────────────────
+  if([...ORDRE,...LIBRES].every(p=>ST.valides.includes(p))){
     html += '<div class="felicitations"><span class="confetti">🎉</span>'
       +'<h2>Félicitations !</h2>'
-      +'<p>L\'équipe <strong>ROUGE</strong> a bouclé toutes les étapes de L\'Apéro !<br><br>'
+      +'<p>L\'équipe <strong>ROUGE</strong> a bouclé toutes les étapes !<br><br>'
       +'Rendez-vous au point de rassemblement pour trinquer ! 🥂</p></div>';
     app.innerHTML = html;
     return;
   }
 
-  // ── Une seule carte : celle de pointAffiche ─────────────────
-  const pt     = PTS[pointAffiche];
-  const aff    = AFF[pointAffiche];
-  const valide = ST.valides.includes(pointAffiche);
-  const libre  = LIBRES.includes(pointAffiche);
+  // ── Carte unique : pointAffiche ──────────────────────────────
+  const pt    = PTS[pointAffiche];
+  const aff   = AFF[pointAffiche];
+  const lib   = LIBRES.includes(pointAffiche);
+  const val   = ST.valides.includes(pointAffiche);
+  const badge = (lib ? 'Point libre<span class="badge-libre">LIBRE</span>' : 'Point '+aff);
 
-  if(valide){
-    // Carte verte dépliable
-    const dep = !!window._dep && window._dep[pointAffiche];
-    let corps = "";
-    if(dep){
-      let qh = '<div class="q-titre">📋 Récapitulatif des réponses</div>';
-      pt.q.forEach((q,qi)=>{
-        qh += '<div class="q-bloc"><div class="q-txt"><span class="q-num">'+(qi+1)+'</span>'+q.t+'</div><div class="opts">';
-        q.o.forEach((o,oi)=>{
-          qh += '<div class="opt lect'+(oi===q.r?" ok":"")+'"><span class="radio"></span><span>'+o+'</span></div>';
-        });
-        qh += '</div></div>';
-      });
-      corps = '<div class="corps">'+qh
-        +'<div class="succes" style="display:block">'
-        +'<div class="succes-t">✅ Point validé !</div>'
-        +'<div class="indice"><div class="indice-l">📍 Indice</div>'+pt.indice+'</div>'
-        +'<div class="coords">📌 '+pt.lat.toFixed(6)+', '+pt.lng.toFixed(6)+'</div>'
-        +'<button class="btn-nav" onclick="openModal('+pt.lat+','+pt.lng+',\''+pt.sport.replace(/'/g,"\\'")+'\')">'
-        +'<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'
-        +'Revoir le chemin</button></div></div>';
-    }
-    const badgeLibre = libre ? ' <span class="badge-libre">LIBRE</span>' : '';
+  if(val){
+    // Carte verte : juste le succès (indice + coords + bouton nav)
+    // Pas de questions, pas de toggle
     html += '<div class="carte" id="card-'+pointAffiche+'">'
-      +'<div class="hd-v" onclick="toggleDep(\''+pointAffiche+'\')">'
-      +'<span class="hd-badge">'+(libre?'Point libre':'Point '+aff)+badgeLibre+'</span>'
+      +'<div class="hd-v">'
+      +'<span class="hd-badge">'+badge+'</span>'
       +'<div class="hd-nom">'+pt.emoji+' '+pt.sport+'</div>'
-      +'<div class="hd-sub">✅ Validé — '+(dep?'toucher pour replier':'toucher pour consulter')+'</div>'
-      +'<div class="hd-tog">'+(dep?'▲':'▼')+'</div>'
-      +'</div>'+corps+'</div>';
+      +'<div class="hd-sub">✅ Point validé !</div>'
+      +'</div>'
+      +'<div class="valide-corps">'
+      +'<div class="succes" style="display:block;margin-top:0">'
+      +'<div class="succes-t">📍 Indice pour trouver votre fiche</div>'
+      +'<div class="indice">'+pt.indice+'</div>'
+      +'<div class="coords">📌 '+pt.lat.toFixed(6)+', '+pt.lng.toFixed(6)+'</div>'
+      +'<button class="btn-nav" onclick="allerA('+pt.lat+','+pt.lng+')">'
+      +'<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'
+      +'Y aller !</button>'
+      +'</div></div></div>';
   } else {
-    // Carte rouge avec QCM
+    // Carte rouge : QCM
     let qh = "";
     pt.q.forEach((q,qi)=>{
       qh += '<div class="q-bloc"><div class="q-txt"><span class="q-num">'+(qi+1)+'</span>'+q.t+'</div><div class="opts">';
       q.o.forEach((o,oi)=>{
-        const sel = (repCours[pointAffiche+"_"+qi]===oi) ? " sel" : "";
+        const sel = (repCours[pointAffiche+"_"+qi]===oi)?" sel":"";
         qh += '<div class="opt'+sel+'" onclick="choisir(\''+pointAffiche+'\','+qi+','+oi+')">'
           +'<span class="radio"></span><span>'+o+'</span></div>';
       });
       qh += '</div></div>';
     });
-    const badgeLibre = libre ? ' <span class="badge-libre">LIBRE</span>' : '';
+
     html += '<div class="carte" id="card-'+pointAffiche+'">'
       +'<div class="hd-r">'
-      +'<span class="hd-badge">'+(libre?'Point libre':'Point '+aff)+badgeLibre+'</span>'
+      +'<span class="hd-badge">'+badge+'</span>'
       +'<div class="hd-nom">'+pt.emoji+' '+pt.sport+'</div>'
       +'<div class="hd-sub">Répondez aux 5 questions pour obtenir les coordonnées</div>'
       +'<div class="hd-ico">'+pt.emoji+'</div>'
       +'</div>'
       +'<div class="corps">'
-      +'<div class="consigne"><strong>🏆 Votre défi sport</strong>Répondez correctement aux 5 questions sur <strong>'+pt.sport+'</strong> pour accéder aux coordonnées.</div>'
+      +'<div class="consigne"><strong>🏆 Votre défi sport</strong>'
+      +'Répondez correctement aux 5 questions sur <strong>'+pt.sport+'</strong>.</div>'
       +'<div class="q-titre">📝 Les 5 questions</div>'
       +qh
       +'<button class="btn-val" onclick="valider(\''+pointAffiche+'\')">✅ Valider mes réponses</button>'
       +'<div class="err" id="err-'+pointAffiche+'">❌ Certaines réponses sont incorrectes. Cherchez encore !</div>'
+      // Panneau succès (caché jusqu'à validation)
       +'<div class="succes" id="suc-'+pointAffiche+'">'
       +'<div class="succes-t">🎉 Bravo, toutes les réponses sont correctes !</div>'
       +'<div class="indice"><div class="indice-l">📍 Indice pour trouver votre fiche</div>'+pt.indice+'</div>'
       +'<div class="coords">📌 '+pt.lat.toFixed(6)+', '+pt.lng.toFixed(6)+'</div>'
-      +'<button class="btn-nav" onclick="openModal('+pt.lat+','+pt.lng+',\''+pt.sport.replace(/'/g,"\\'")+'\')">'
+      +'<button class="btn-nav" onclick="allerA('+pt.lat+','+pt.lng+')">'
       +'<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'
       +'Y aller !</button></div>'
       +'</div></div>';
@@ -391,36 +352,20 @@ function render(){
 // ================================================================
 // INTERACTIONS
 // ================================================================
-window._dep = {};   // état déplié des cartes validées
-
 function afficherPoint(lettre){
+  // Changer le point affiché — PAS de scroll
   pointAffiche = lettre;
-  render();
-  setTimeout(()=>{
-    const el = document.getElementById("card-"+lettre);
-    if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
-  }, 60);
-}
-
-function toggleDep(lettre){
-  window._dep[lettre] = !window._dep[lettre];
   render();
 }
 
 function choisir(lettre, qi, oi){
   repCours[lettre+"_"+qi] = oi;
-  // Mise à jour visuelle légère (sans re-render complet)
-  PTS[lettre].q.forEach((_,idx)=>{
-    PTS[lettre].q[idx].o.forEach((__,optIdx)=>{
-      document.querySelectorAll('[onclick="choisir(\''+lettre+'\','+idx+','+optIdx+')"]')
-        .forEach(el=>{
-          if(repCours[lettre+"_"+idx]===optIdx){
-            el.classList.add("sel");
-          } else {
-            el.classList.remove("sel");
-          }
-        });
-    });
+  // Mise à jour visuelle légère sans re-render
+  PTS[lettre].q[qi].o.forEach((_,optIdx)=>{
+    document.querySelectorAll('[onclick="choisir(\''+lettre+'\','+qi+','+optIdx+')"]')
+      .forEach(el=>{
+        if(optIdx===oi) el.classList.add("sel"); else el.classList.remove("sel");
+      });
   });
 }
 
@@ -428,8 +373,7 @@ function valider(lettre){
   const pt = PTS[lettre];
   let ok = true;
   pt.q.forEach((q,qi)=>{
-    const r = repCours[lettre+"_"+qi];
-    if(r === undefined || r !== q.r) ok = false;
+    if(repCours[lettre+"_"+qi] !== q.r) ok = false;
   });
 
   const errEl = document.getElementById("err-"+lettre);
@@ -443,28 +387,19 @@ function valider(lettre){
     return;
   }
 
-  // Succès : afficher panneau, masquer QCM
+  // ✅ Succès : montrer panneau, cacher QCM
   errEl.style.display = "none";
   sucEl.style.display = "block";
   const corps = document.querySelector("#card-"+lettre+" .corps");
   if(corps){
-    corps.querySelectorAll(".consigne,.q-titre,.q-bloc,.btn-val,.err").forEach(el=>{
-      el.style.display="none";
-    });
+    corps.querySelectorAll(".consigne,.q-titre,.q-bloc,.btn-val,.err")
+      .forEach(el=>{ el.style.display="none"; });
   }
 
   if(!ST.valides.includes(lettre)){
     ST.valides.push(lettre);
     sauver(ST);
-    // Après 2.2s : passer au point suivant
-    setTimeout(()=>{
-      if(ORDRE.includes(lettre)){
-        const idx = indexCourant(ST);
-        if(idx < ORDRE.length) pointAffiche = ORDRE[idx];
-        // sinon on reste sur la carte validée
-      }
-      render();
-    }, 2200);
+    // PAS de changement automatique : le joueur choisit quand passer au suivant
   }
 }
 
