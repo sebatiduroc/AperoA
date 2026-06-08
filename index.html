@@ -114,8 +114,11 @@ header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;
 </head>
 <body>
 <header>
-  <h1>🥂 L'Apéro</h1>
-  <div class="badge-equipe">⬤ ÉQUIPE ROUGE</div>
+  <div style="position:relative;">
+    <h1>🥂 L'Apéro</h1>
+    <div class="badge-equipe">⬤ ÉQUIPE ROUGE</div>
+    <button onclick="raz()" style="position:absolute;top:0;right:0;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-family:'Lato',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:1px;padding:5px 10px;border-radius:8px;cursor:pointer;">RAZ</button>
+  </div>
 </header>
 <div class="container" id="app"></div>
 <script>
@@ -400,6 +403,19 @@ function valider(lettre){
     ST.valides.push(lettre);
     sauver(ST);
     // Mettre à jour les pastilles immédiatement (vert sur validé, rouge sur suivant)
+    render();
+  }
+}
+
+// ================================================================
+// RAZ
+// ================================================================
+function raz(){
+  if(confirm("⚠️ Remettre le jeu à zéro ?\nToute la progression sera effacée.")){
+    try{ localStorage.removeItem(CLE); }catch(e){}
+    ST = etatVide();
+    repCours = {};
+    pointAffiche = premierNonValide(ST);
     render();
   }
 }
